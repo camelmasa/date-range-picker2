@@ -1,0 +1,168 @@
+.drp-container {
+  color: #333;
+  font-size: 0.7em;
+  padding: 5px;
+  font-family: "HiraginoSans-W3";
+
+  & .show-component {
+    display: flex;
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-items: center;
+      width: 50%;
+      padding: 5px;
+      border-width: 1px;
+      border-style: solid;
+
+      & span:first-child {
+        margin-bottom: 3px;
+      }
+    }
+
+    & .start-day {
+       margin-right: 5px;
+    }
+
+    & .end-day {
+       margin-left: 5px;
+    }
+
+    & .select {
+      color: white;
+    }
+  }
+
+  & .header-component {
+    display: flex;
+    font-size: 1.5em;
+
+    & > div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      width: 50%;
+    }
+
+    & .start-day {
+       padding-right: 5px;
+    }
+
+    & .end-day {
+       padding-left: 5px;
+    }
+
+    & .arrow {
+      fill: currentColor;
+    }
+
+    & .arrow-component {
+      height: 36px;
+      width: 36px;
+      display: flex;
+      justify-content:center;
+      align-items: center;
+
+      & .right-arrow {
+        transform: scale(-1,1);
+      }
+    }
+  }
+
+  & .dayofweek-component {
+    display: flex;
+    justify-content: space-between;
+    border-width: 0;
+    border-style: solid;
+    border-bottom-width: 1px;
+    margin-bottom: 5px;
+
+    & > span {
+      height: 36px;
+      width: 14.2857%;
+      display: flex;
+      justify-content:center;
+      align-items: center;
+    }
+  }
+
+  & .swiper-container {
+    margin-bottom: 10px;
+
+    & .swiper-wrapper {
+      & .swiper-slide {
+        & .week {
+          display: flex;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          margin-bottom: 5px;
+
+          & .day-container {
+            position: relative;
+            width: 14.2857%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            & .background {
+              position: absolute;
+              width: 50%;
+              height: 100%;
+              opacity: 0.5;
+            }
+
+            & .left-background {
+              left: 0;
+            }
+
+            & .right-background {
+              right: 0;
+            }
+
+            & .day-component {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              width: 36px;
+              height: 36px;
+
+              & .day {
+                color: white;
+                z-index: 1;
+              }
+              & .not-this-month {
+                color: #aaa;
+              }
+            }
+
+            & .day-component.point {
+              border-radius: 18px;
+            }
+          }
+
+          & .day-container.range {
+            color: white;
+            opacity: 0.5;
+          }
+        }
+      }
+    }
+  }
+
+  & .button-component {
+    display: flex;
+    justify-content: flex-end;
+
+    & span {
+      font-size: 1.5em;
+      padding: 0 20px;
+    }
+
+    & .disable {
+      opacity: 0.5;
+    }
+  }
+}

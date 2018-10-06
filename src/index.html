@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <title>Date Range Picker Demo</title>
+  </head>
+  <body>
+    <div>
+      <div id="date-range-picker"></div>
+    </div>
+
+    <script>
+      window.addEventListener('load', function(){
+        const picker = DateRangePicker({
+          submit: (startDay, endDay) => {
+            const message = 'Selected from ' + startDay.format('YYYY/MM/DD') + ' to ' + endDay.format('YYYY/MM/DD') + '.'
+            alert(message)
+          },
+          cancel: () => {
+            const message = 'Tapped cancel button.'
+            alert(message)
+          }
+        })
+        picker.render(document.getElementById('date-range-picker'))
+      }, false);
+    </script>
+  </body>
+</html>
