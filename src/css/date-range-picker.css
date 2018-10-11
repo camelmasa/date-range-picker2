@@ -156,13 +156,15 @@
     display: flex;
     justify-content: flex-end;
 
-    & span {
+    & button {
       font-size: 1.5em;
       padding: 0 20px;
+      border: none;
+      background-color: transparent;
     }
 
     & .disable {
-      opacity: 0.5;
+      opacity: 0.3;
     }
   }
 }

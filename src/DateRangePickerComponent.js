@@ -24,6 +24,8 @@ class DateRangePickerComponent extends Component {
       cancel: props.cancel || (() => {}),
       currentMonth: moment().startOf('month'),
       selectorStart: true,
+      cancelDisable: false,
+      submitDisable: false
     }
     this.state.calendars = this._createCalendars(moment().startOf('month'), this.state.startDay, this.state.endDay)
 
@@ -34,6 +36,8 @@ class DateRangePickerComponent extends Component {
     this.selectDay = this.selectDay.bind(this)
     this.cancel = this.cancel.bind(this)
     this.submit = this.submit.bind(this)
+    this.enableCancelButton = this.enableCancelButton.bind(this)
+    this.enableSubmitButton = this.enableSubmitButton.bind(this)
   }
 
   componentDidMount() {
@@ -79,24 +83,34 @@ class DateRangePickerComponent extends Component {
     // For rerender calendars
     if (selectorStart || startDay > day) {
       const calendars = this._createCalendars(currentMonth, day, null)
-      this.setState({ startDay: day, endDay: null, selectorStart: false, calendars: calendars })
+      this.setState({ startDay: day, endDay: null, selectorStart: false, calendars: calendars, submitDisable: true })
     }
     else {
       const calendars = this._createCalendars(currentMonth, startDay, day)
-      this.setState({ endDay: day, selectorStart: true, calendars: calendars })
+      this.setState({ endDay: day, selectorStart: true, calendars: calendars, submitDisable: false })
     }
   }
 
   cancel() {
-    this.state.cancel()
+    this.setState({ cancelDisable: true }, () => {
+      this.state.cancel(this.enableCancelButton)
+    })
   }
 
   submit() {
-    const { startDay, endDay, submit } = this.state
+    this.setState({ submitDisable: true }, () => {
+      const { startDay, endDay, submit } = this.state
 
-    if (endDay == null) return
+      submit(startDay, endDay, this.enableSubmitButton)
+    })
+  }
 
-    submit(startDay, endDay)
+  enableCancelButton() {
+    this.setState({ cancelDisable: false })
+  }
+
+  enableSubmitButton() {
+    this.setState({ submitDisable: false })
   }
 
   _monthAdd(months) {
@@ -189,7 +203,7 @@ class DateRangePickerComponent extends Component {
   }
 
   render() {
-    const { color, startDay, endDay, currentMonth, selectorStart, calendars } = this.state
+    const { color, startDay, endDay, currentMonth, selectorStart, calendars, cancelDisable, submitDisable } = this.state
     const startDayClass = classNames({
       'start-day': true,
       'select': selectorStart
@@ -219,8 +233,13 @@ class DateRangePickerComponent extends Component {
     const arrowComponentStyle = { color: color }
     const dayOfWeekComponentStyle = { color: color, borderColor: color }
     const buttonStyle = { color: color }
+    const cancelClass = classNames({
+      'button': true,
+      'disable': cancelDisable
+    })
     const submitClass = classNames({
-      'disable': !endDay
+      'button': true,
+      'disable': submitDisable
     })
 
     return (
@@ -268,8 +287,8 @@ class DateRangePickerComponent extends Component {
         </div>
 
         <div className="button-component">
-          <span onClick={this.cancel} style={buttonStyle}>キャンセル</span>
-          <span onClick={this.submit} style={buttonStyle} className={submitClass}>決定</span>
+          <button onClick={this.cancel} className={cancelClass} style={buttonStyle} disabled={cancelDisable}>キャンセル</button>
+          <button onClick={this.submit} className={submitClass} style={buttonStyle} disabled={submitDisable}>決定</button>
         </div>
       </div>
     )
