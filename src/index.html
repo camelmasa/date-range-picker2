@@ -11,7 +11,7 @@
     </div>
 
     <script>
-      window.addEventListener('load', function(){
+      window.addEventListener('load', () => {
         const picker = DateRangePicker({
           submit: (startDay, endDay) => {
             const message = 'Selected from ' + startDay.format('YYYY/MM/DD') + ' to ' + endDay.format('YYYY/MM/DD') + '.'
