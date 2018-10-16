@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import Swiper from 'swiper/dist/js/swiper.esm.bundle'
-import moment from "moment"
+import dayjs from "dayjs"
 import classNames from "classnames"
 
 import "./css/index.css"
@@ -18,16 +18,16 @@ class DateRangePickerComponent extends Component {
 
     this.state = {
       color: props.color || "#00b5a3",
-      startDay: props.startDay || moment(),
-      endDay: props.endDay || moment().add(DAY_LENGTH - 1, 'days'),
+      startDay: props.startDay || dayjs(),
+      endDay: props.endDay || dayjs().add(DAY_LENGTH - 1, 'days'),
       submit: props.submit || (() => {}),
       cancel: props.cancel || (() => {}),
-      currentMonth: moment().startOf('month'),
+      currentMonth: dayjs().startOf('month'),
       selectorStart: true,
       cancelDisable: false,
       submitDisable: false
     }
-    this.state.calendars = this._createCalendars(moment().startOf('month'), this.state.startDay, this.state.endDay)
+    this.state.calendars = this._createCalendars(dayjs().startOf('month'), this.state.startDay, this.state.endDay)
 
     this.backYear = this.backYear.bind(this)
     this.nextYear = this.nextYear.bind(this)
@@ -115,7 +115,7 @@ class DateRangePickerComponent extends Component {
 
   _monthAdd(months) {
     const { currentMonth, startDay, endDay } = this.state
-    const newCurrentMonth = moment(currentMonth).add(months, 'months')
+    const newCurrentMonth = dayjs(currentMonth).add(months, 'months')
     const calendars = this._createCalendars(newCurrentMonth, startDay, endDay)
 
     this.setState({
@@ -128,13 +128,13 @@ class DateRangePickerComponent extends Component {
     const { color } = this.state
 
     return [...Array(CALENDAR_CONTAINER_LENGTH).keys()].map((i) => {
-      const startOfMonth = moment(currentMonth).add(i - 1, 'months').startOf('month')
-      const endOfMonth = moment(startOfMonth).endOf('month')
-      const trueStartOfMonth = moment(startOfMonth).subtract(startOfMonth.weekday(), 'days')
+      const startOfMonth = dayjs(currentMonth).add(i - 1, 'months').startOf('month')
+      const endOfMonth = dayjs(startOfMonth).endOf('month')
+      const trueStartOfMonth = dayjs(startOfMonth).subtract(startOfMonth.day(), 'days')
 
       const weeks = [...Array(WEEK_LENGTH).keys()].map((j) => {
         const days = [...Array(DAY_LENGTH).keys()].map((k) => {
-          const day = moment(trueStartOfMonth).add((j * DAY_LENGTH) + k, 'days')
+          const day = dayjs(trueStartOfMonth).add((j * DAY_LENGTH) + k, 'days')
 
           // conditions
           const notThisMonth  = (startOfMonth > day || endOfMonth < day)
@@ -260,7 +260,7 @@ class DateRangePickerComponent extends Component {
             <span className="arrow-component" onClick={this.backYear} style={arrowComponentStyle}>
               <Arrow className="arrow" />
             </span>
-            <span>{moment(currentMonth).format("YYYY年")}</span>
+            <span>{dayjs(currentMonth).format("YYYY年")}</span>
             <span className="arrow-component" onClick={this.nextYear} style={arrowComponentStyle}>
               <Arrow className="arrow right-arrow" />
             </span>
@@ -269,7 +269,7 @@ class DateRangePickerComponent extends Component {
             <span className="arrow-component" onClick={this.backMonth} style={arrowComponentStyle}>
               <Arrow className="arrow" />
             </span>
-            <span>{moment(currentMonth).format("M月")}</span>
+            <span>{dayjs(currentMonth).format("M月")}</span>
             <span className="arrow-component" onClick={this.nextMonth} style={arrowComponentStyle}>
               <Arrow className="arrow right-arrow"/>
             </span>
