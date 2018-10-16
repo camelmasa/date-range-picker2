@@ -136,7 +136,7 @@ class DateRangePickerComponent extends Component {
         const days = [...Array(DAY_LENGTH).keys()].map((k) => {
           const day = moment(trueStartOfMonth).add((j * DAY_LENGTH) + k, 'days')
 
-          // conditionals
+          // conditions
           const notThisMonth  = (startOfMonth > day || endOfMonth < day)
           const afterStartDay = (startDay && startDay.format("YYYYMMDD") < day.format("YYYYMMDD"))
           const beforeEndDay  = (endDay && endDay.format("YYYYMMDD") > day.format("YYYYMMDD"))
