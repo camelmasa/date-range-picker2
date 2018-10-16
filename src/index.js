@@ -5,13 +5,22 @@ import DateRangePickerComponent from "./DateRangePickerComponent"
 class DateRangePicker {
   constructor(params) {
     this.params = params
+    this.picker = null
+  }
+
+  enableSubmitButton() {
+    this.picker.enableSubmitButton()
+  }
+
+  enableCancelButton() {
+    this.picker.enableCancelButton()
   }
 
   render(el) {
     // For iOS
     el.style["-webkit-tap-highlight-color"] = "transparent"
 
-    ReactDOM.render(<DateRangePickerComponent {...this.params} />, el)
+    this.picker = ReactDOM.render(<DateRangePickerComponent {...this.params} />, el)
   }
 }
 

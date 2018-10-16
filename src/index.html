@@ -16,10 +16,12 @@
           submit: (startDay, endDay) => {
             const message = 'Selected from ' + startDay.format('YYYY/MM/DD') + ' to ' + endDay.format('YYYY/MM/DD') + '.'
             alert(message)
+            picker.enableSubmitButton()
           },
           cancel: () => {
             const message = 'Tapped cancel button.'
             alert(message)
+            picker.enableCancelButton()
           }
         })
         picker.render(document.getElementById('date-range-picker'))

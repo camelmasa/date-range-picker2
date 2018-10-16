@@ -93,7 +93,7 @@ class DateRangePickerComponent extends Component {
 
   cancel() {
     this.setState({ cancelDisable: true }, () => {
-      this.state.cancel(this.enableCancelButton)
+      this.state.cancel()
     })
   }
 
@@ -101,7 +101,7 @@ class DateRangePickerComponent extends Component {
     this.setState({ submitDisable: true }, () => {
       const { startDay, endDay, submit } = this.state
 
-      submit(startDay, endDay, this.enableSubmitButton)
+      submit(startDay, endDay)
     })
   }
 
