@@ -15,6 +15,7 @@ class DateRangePickerComponent extends Component {
     super(props)
 
     this.swiper = null
+    this.locale = props.locale
 
     this.state = {
       color: props.color || "#00b5a3",
@@ -126,6 +127,7 @@ class DateRangePickerComponent extends Component {
 
   _createCalendars(currentMonth, startDay, endDay) {
     const { color } = this.state
+    const l = this.locale
 
     return [...Array(CALENDAR_CONTAINER_LENGTH).keys()].map((i) => {
       const startOfMonth = dayjs(currentMonth).add(i - 1, 'months').startOf('month')
@@ -204,6 +206,8 @@ class DateRangePickerComponent extends Component {
 
   render() {
     const { color, startDay, endDay, currentMonth, selectorStart, calendars, cancelDisable, submitDisable } = this.state
+    const l = this.locale
+
     const startDayClass = classNames({
       'start-day': true,
       'select': selectorStart
@@ -222,7 +226,7 @@ class DateRangePickerComponent extends Component {
       Object.assign(endDayStyle, { backgroundColor: color })
     }
 
-    const dayOfWeeks = ["日", "月", "火", "水", "木", "金", "土"].map((dayOfWeek, i) => {
+    const dayOfWeeks = l.dayOfWeek.map((dayOfWeek, i) => {
       return (
         <span key={i}>
           {dayOfWeek}
@@ -242,39 +246,56 @@ class DateRangePickerComponent extends Component {
       'disable': submitDisable
     })
 
+    const startDayComponent = (
+      <div className="start-day">
+        <span className="arrow-component" onClick={this.backYear} style={arrowComponentStyle}>
+          <Arrow className="arrow" />
+        </span>
+        <span>{dayjs(currentMonth).format(l.yearFormat)}</span>
+        <span className="arrow-component" onClick={this.nextYear} style={arrowComponentStyle}>
+          <Arrow className="arrow right-arrow" />
+        </span>
+      </div>
+    )
+
+    const endDayComponent = (
+      <div className="end-day">
+        <span className="arrow-component" onClick={this.backMonth} style={arrowComponentStyle}>
+          <Arrow className="arrow" />
+        </span>
+        <span>{dayjs(currentMonth).format(l.monthFormat)}</span>
+        <span className="arrow-component" onClick={this.nextMonth} style={arrowComponentStyle}>
+          <Arrow className="arrow right-arrow"/>
+        </span>
+      </div>
+    )
+
+    const yearMonthHeader = (l.name == "ja") ? (
+      <div className="header-component">
+        {startDayComponent}
+        {endDayComponent}
+      </div>
+    ) : (
+      <div className="header-component">
+        {endDayComponent}
+        {startDayComponent}
+      </div>
+    )
+
     return (
       <div className="drp-container">
         <div className="show-component">
           <div className={startDayClass} style={startDayStyle}>
-            <span>開始</span>
-            <span>{startDay.format("YYYY年MM月DD日")}</span>
+            <span>{l.start}</span>
+            <span>{startDay.format(l.startFormat)}</span>
           </div>
           <div className={endDayClass} style={endDayStyle}>
-            <span>終わり</span>
-            <span>{(endDay) ? endDay.format("YYYY年MM月DD日") : "" }</span>
+            <span>{l.end}</span>
+            <span>{(endDay) ? endDay.format(l.endFormat) : "" }</span>
           </div>
         </div>
 
-        <div className="header-component">
-          <div className="start-day">
-            <span className="arrow-component" onClick={this.backYear} style={arrowComponentStyle}>
-              <Arrow className="arrow" />
-            </span>
-            <span>{dayjs(currentMonth).format("YYYY年")}</span>
-            <span className="arrow-component" onClick={this.nextYear} style={arrowComponentStyle}>
-              <Arrow className="arrow right-arrow" />
-            </span>
-          </div>
-          <div className="end-day">
-            <span className="arrow-component" onClick={this.backMonth} style={arrowComponentStyle}>
-              <Arrow className="arrow" />
-            </span>
-            <span>{dayjs(currentMonth).format("M月")}</span>
-            <span className="arrow-component" onClick={this.nextMonth} style={arrowComponentStyle}>
-              <Arrow className="arrow right-arrow"/>
-            </span>
-          </div>
-        </div>
+        {yearMonthHeader}
 
         <div className="dayofweek-component" style={dayOfWeekComponentStyle}>
           {dayOfWeeks}
@@ -287,8 +308,8 @@ class DateRangePickerComponent extends Component {
         </div>
 
         <div className="button-component">
-          <button onClick={this.cancel} className={cancelClass} style={buttonStyle} disabled={cancelDisable}>キャンセル</button>
-          <button onClick={this.submit} className={submitClass} style={buttonStyle} disabled={submitDisable}>決定</button>
+          <button onClick={this.cancel} className={cancelClass} style={buttonStyle} disabled={cancelDisable}>{l.cancel}</button>
+          <button onClick={this.submit} className={submitClass} style={buttonStyle} disabled={submitDisable}>{l.submit}</button>
         </div>
       </div>
     )
