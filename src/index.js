@@ -18,8 +18,9 @@ class DateRangePicker {
     this.picker.enableCancelButton()
   }
 
-  render(el) {
+  render(elementId) {
     // For iOS
+    let el = document.getElementById(elementId)
     el.style["-webkit-tap-highlight-color"] = "transparent"
 
     this.picker = ReactDOM.render(<DateRangePickerComponent {...this.params} locale={this.locale} />, el)

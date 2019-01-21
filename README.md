@@ -20,6 +20,7 @@ Date Range Picker for mobile (for now).
       <div id="date-range-picker"></div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/date-range-picker2/dist/index.js"></script>
     <script>
       const picker = DateRangePicker({
         locale: "en",
