@@ -1,5 +1,5 @@
 {
-  "name": "date-range-picker",
+  "name": "date-range-picker2",
   "version": "0.0.1",
   "files": [
     "README.md",
@@ -7,10 +7,10 @@
   ],
   "description": "Date Range Picker",
   "main": "./dist/index.js",
-  "repository": "git@github.com:camelmasa/date-range-picker.git",
+  "repository": "git@github.com:camelmasa/date-range-picker2.git",
   "author": "Masahiro Saito",
   "license": "MIT",
-  "homepage": "https://github.com/camelmasa/date-range-picker",
+  "homepage": "https://github.com/camelmasa/date-range-picker2",
   "scripts": {
     "start": "webpack-dev-server --open --mode development",
     "build": "webpack --mode production"
