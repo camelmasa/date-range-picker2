@@ -1,5 +1,6 @@
 import React, { Component } from "react"
-import Swiper from 'swiper/dist/js/swiper.esm.bundle'
+// import Swiper from 'swiper/dist/js/swiper.esm.bundle'
+import Siema from 'siema/dist/siema.min.js'
 import dayjs from "dayjs"
 import classNames from "classnames"
 
@@ -42,20 +43,40 @@ class DateRangePickerComponent extends Component {
   }
 
   componentDidMount() {
-    const swiper = new Swiper('.swiper-container', {
-      initialSlide: 1,
-      on: {
-        transitionEnd: () => {
-          // swiper is undefined when rendering view
-          if (!swiper) return
+    const swiper = new Siema({
+      selector: ".swiper-container",
+      startIndex: 1,
+      onChange: () => {
+        console.log(swiper.currentSlide)
 
-          this._monthAdd(swiper.activeIndex - 1)
+        const { currentMonth, startDay, endDay } = this.state
+        const newCurrentMonth = dayjs(currentMonth).add(1, 'months')
 
-          swiper.activeIndex = 1
-          swiper.update()
-        }
-      }
+        console.log(this._createCalendars(newCurrentMonth, startDay, endDay)[2])
+        
+        swiper.append(this._createCalendars(newCurrentMonth, startDay, endDay)[2])
+
+        // this._monthAdd(swiper.currentSlide - 1)
+
+        // swiper.currentSlide = 1
+        // swiper.updateAfterDrag()
+      },
     })
+
+    // const swiper = new Swiper('.swiper-container', {
+    //   initialSlide: 1,
+    //   on: {
+    //     transitionEnd: () => {
+    //       // swiper is undefined when rendering view
+    //       if (!swiper) return
+
+    //       this._monthAdd(swiper.activeIndex - 1)
+
+    //       swiper.activeIndex = 1
+    //       swiper.update()
+    //     }
+    //   }
+    // })
     this.swiper = swiper
   }
 
@@ -68,11 +89,11 @@ class DateRangePickerComponent extends Component {
   }
 
   backMonth() {
-    this.swiper.slidePrev()
+    this.swiper.prev()
   }
 
   nextMonth() {
-    this.swiper.slideNext()
+    this.swiper.next()
   }
 
   selectDay(day) {
@@ -302,9 +323,7 @@ class DateRangePickerComponent extends Component {
         </div>
 
         <div className="swiper-container">
-          <div className="swiper-wrapper">
-            {calendars}
-          </div>
+          {calendars}
         </div>
 
         <div className="button-component">

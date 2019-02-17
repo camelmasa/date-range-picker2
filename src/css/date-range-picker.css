@@ -92,61 +92,59 @@
   & .swiper-container {
     margin-bottom: 10px;
 
-    & .swiper-wrapper {
-      & .swiper-slide {
-        & .week {
-          display: flex;
-          justify-content: space-between;
-          flex-wrap: wrap;
-          margin-bottom: 5px;
+    & .swiper-slide {
+      & .week {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 5px;
 
-          & .day-container {
-            position: relative;
-            width: 14.2857%;
+        & .day-container {
+          position: relative;
+          width: 14.2857%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          & .background {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            opacity: 0.5;
+          }
+
+          & .left-background {
+            left: 0;
+          }
+
+          & .right-background {
+            right: 0;
+          }
+
+          & .day-component {
             display: flex;
             justify-content: center;
             align-items: center;
+            width: 36px;
+            height: 36px;
 
-            & .background {
-              position: absolute;
-              width: 50%;
-              height: 100%;
-              opacity: 0.5;
+            & .day {
+              color: white;
+              z-index: 1;
             }
-
-            & .left-background {
-              left: 0;
-            }
-
-            & .right-background {
-              right: 0;
-            }
-
-            & .day-component {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              width: 36px;
-              height: 36px;
-
-              & .day {
-                color: white;
-                z-index: 1;
-              }
-              & .not-this-month {
-                color: #aaa;
-              }
-            }
-
-            & .day-component.point {
-              border-radius: 18px;
+            & .not-this-month {
+              color: #aaa;
             }
           }
 
-          & .day-container.range {
-            color: white;
-            opacity: 0.5;
+          & .day-component.point {
+            border-radius: 18px;
           }
+        }
+
+        & .day-container.range {
+          color: white;
+          opacity: 0.5;
         }
       }
     }
